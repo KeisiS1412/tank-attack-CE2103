@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 4.1)
+project(P2_CE2103_TankAttack)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(P2_CE2103_TankAttack
+        src/main.cpp
+        src/core/Graph.cpp
+        src/core/Graph.h)
