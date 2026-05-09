@@ -6,4 +6,6 @@ set(CMAKE_CXX_STANDARD 14)
 add_executable(P2_CE2103_TankAttack
         src/main.cpp
         src/core/Graph.cpp
-        src/core/Graph.h)
+        src/core/Graph.h
+        src/core/Queue.cpp
+        src/core/Queue.h)

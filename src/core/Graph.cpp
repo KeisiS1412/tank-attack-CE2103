@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include "Queue.h"
 
 Graph::Graph(int rows, int cols) {
     this->rows = rows;
@@ -101,15 +102,14 @@ bool Graph::isAccessible() {
     bool* visited = new bool[total];
     for (int i = 0; i < total; i++) visited[i] = false;
 
-    int* queue = new int[total];
-    int front = 0, back = 0;
+    Queue queue;
+    queue.enqueue(startIndex);
 
-    queue[back++] = startIndex;
     visited[startIndex] = true;
     int visitedCount = 1;
 
-    while (front < back) {
-        int current = queue[front++];
+    while (!queue.isEmpty()){
+        int current = queue.dequeue();
         int row = nodes[current].row;
         int col = nodes[current].col;
 
@@ -121,14 +121,13 @@ bool Graph::isAccessible() {
             int nIndex = neighbors[i].row * cols + neighbors[i].col;
             if (!visited[nIndex] && !nodes[nIndex].obstacle) {
                 visited[nIndex] = true;
-                queue[back++] = nIndex;
+                queue.enqueue(nIndex);
                 visitedCount++;
             }
         }
     }
 
     delete[] visited;
-    delete[] queue;
 
     return visitedCount == freeCells;
 }
