@@ -98,7 +98,6 @@ bool Graph::isAccessible() {
 
     if (freeCells == 0) return true;
 
-    // cambiar a q
     bool* visited = new bool[total];
     for (int i = 0; i < total; i++) visited[i] = false;
 
@@ -130,4 +129,32 @@ bool Graph::isAccessible() {
     delete[] visited;
 
     return visitedCount == freeCells;
+}
+
+int Graph::getRows()
+{
+    return rows;
+}
+
+int Graph::getCols()
+{
+    return cols;
+}
+
+void Graph::setObstacle(int row, int col)
+{
+    int idx = row * cols + col;
+    nodes[idx].obstacle = true;
+}
+
+void Graph::removeObstacle(int row, int col)
+{
+    int idx = row * cols + col;
+    nodes[idx].obstacle = false;
+}
+
+bool Graph::isObstacle(int row, int col)
+{
+    int idx = row * cols + col;
+    return nodes[idx].obstacle;
 }

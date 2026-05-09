@@ -8,4 +8,6 @@ add_executable(P2_CE2103_TankAttack
         src/core/Graph.cpp
         src/core/Graph.h
         src/core/Queue.cpp
-        src/core/Queue.h)
+        src/core/Queue.h
+        src/core/MapGenerator.cpp
+        src/core/MapGenerator.h)

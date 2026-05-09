@@ -24,6 +24,11 @@ public:
     bool isValid(int row, int col);
     void getNeighbors(int row, int col, Node neighbors[4], int& count);
     bool isAccessible();
+    int getRows();
+    int getCols();
+    void setObstacle(int row, int col);
+    void removeObstacle(int row, int col);
+    bool isObstacle(int row, int col);
 };
 
 
