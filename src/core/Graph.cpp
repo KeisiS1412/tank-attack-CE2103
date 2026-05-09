@@ -65,6 +65,8 @@ bool Graph::isValid(int row, int col)
     return (row >= 0 && row < rows && col >= 0 && col < cols);
 }
 
+// completa un array de nodos con los vecinos
+// tiene un contador para el índice por si hay menos de cuatro vecinos
 void Graph::getNeighbors(int row, int col, Node neighbors[4], int& count)
 {
     int dRow[4] = {-1, 1, 0, 0};
@@ -84,7 +86,8 @@ void Graph::getNeighbors(int row, int col, Node neighbors[4], int& count)
     }
 }
 
-bool Graph::isAccessible() {
+bool Graph::isAccessible() // verifica si cada nodo es accesible desde cualquier parte
+{
     int total = rows * cols;
 
     int startIndex = -1;
