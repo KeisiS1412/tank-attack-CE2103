@@ -11,7 +11,6 @@ private:
     void resetMap(Graph& graph);
 public:
     MapGenerator(double ratio);
-    ~MapGenerator();
     void setObstacles(Graph& graph);
     void generate(Graph& graph);
 };

@@ -23,6 +23,7 @@ void Queue::enqueue(int value)
     if (front == nullptr)
     {
         front = newNode;
+        back = newNode;
     }
     else
     {

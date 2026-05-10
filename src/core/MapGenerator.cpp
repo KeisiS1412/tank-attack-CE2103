@@ -53,7 +53,7 @@ void MapGenerator::generate(Graph& graph)
     do // distribuye los obstáculos
     {
         setObstacles(graph);
-        resetMap(graph);
+        if (!graph.isAccessible()) resetMap(graph);
     }
     while (!graph.isAccessible());
     // si no todos los nodos son accesibles se resetea y los distribuye de nuevo hasta que sea accesible
@@ -67,16 +67,14 @@ void MapGenerator::resetMap(Graph& graph)
     {
         int row = i / graph.getCols();
         int col = i % graph.getCols();
-        if (graph.isObstacle(row, col))
+        graph.removeObstacle(row, col);
+        Node neighbors[4];
+        int count = 0;
+        graph.getNeighbors(row, col, neighbors, count);
+        for (int j = 0; j < count; j++)
         {
-            graph.removeObstacle(row, col);
-            Node neighbors[4];
-            int count = 0;
-            graph.getNeighbors(row, col, neighbors, count);
-            for (int j = 0; j < count; j++)
-            {
-                graph.addEdge(row, col, neighbors[j].row, neighbors[j].col);
-            }
+            graph.addEdge(row, col, neighbors[j].row, neighbors[j].col);
         }
+
     }
 }
