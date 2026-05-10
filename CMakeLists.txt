@@ -10,4 +10,6 @@ add_executable(P2_CE2103_TankAttack
         src/core/Queue.cpp
         src/core/Queue.h
         src/core/MapGenerator.cpp
-        src/core/MapGenerator.h)
+        src/core/MapGenerator.h
+        src/core/Pathfinding.cpp
+        src/core/Pathfinding.h)
