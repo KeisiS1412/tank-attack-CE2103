@@ -3,6 +3,10 @@ project(P2_CE2103_TankAttack)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(SFML_DIR "C:/SFML/SFML-3.1.0/lib/cmake/SFML") #cambiar dirección a carpeta propia
+
+find_package(SFML 3 COMPONENTS Graphics REQUIRED)
+
 add_executable(P2_CE2103_TankAttack
         src/main.cpp
         src/core/Graph.cpp
@@ -13,3 +17,7 @@ add_executable(P2_CE2103_TankAttack
         src/core/MapGenerator.h
         src/core/Pathfinding.cpp
         src/core/Pathfinding.h)
+
+target_include_directories(P2_CE2103_TankAttack PRIVATE src)
+link_directories("C:/SFML/SFML-3.1.0/lib") #cambiar dirección a carpeta propia
+target_link_libraries(P2_CE2103_TankAttack SFML::Graphics)
