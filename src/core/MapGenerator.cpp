@@ -68,13 +68,6 @@ void MapGenerator::resetMap(Graph& graph)
         int row = i / graph.getCols();
         int col = i % graph.getCols();
         graph.removeObstacle(row, col);
-        Node neighbors[4];
-        int count = 0;
-        graph.getNeighbors(row, col, neighbors, count);
-        for (int j = 0; j < count; j++)
-        {
-            graph.addEdge(row, col, neighbors[j].row, neighbors[j].col);
-        }
-
+        connectNodes(graph);
     }
 }
