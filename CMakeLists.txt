@@ -16,7 +16,9 @@ add_executable(P2_CE2103_TankAttack
         src/core/MapGenerator.cpp
         src/core/MapGenerator.h
         src/core/Pathfinding.cpp
-        src/core/Pathfinding.h)
+        src/core/Pathfinding.h
+        src/core/Tank.cpp
+        src/core/Tank.h)
 
 target_include_directories(P2_CE2103_TankAttack PRIVATE src)
 link_directories("C:/SFML/SFML-3.1.0/lib") #cambiar dirección a carpeta propia
