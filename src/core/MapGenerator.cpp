@@ -52,8 +52,8 @@ void MapGenerator::generate(Graph& graph)
     connectNodes(graph); // recibe el grafo y conecta los nodos
     do // distribuye los obstáculos
     {
+        resetMap(graph);
         setObstacles(graph);
-        if (!graph.isAccessible()) resetMap(graph);
     }
     while (!graph.isAccessible());
     // si no todos los nodos son accesibles se resetea y los distribuye de nuevo hasta que sea accesible
@@ -68,6 +68,6 @@ void MapGenerator::resetMap(Graph& graph)
         int row = i / graph.getCols();
         int col = i % graph.getCols();
         graph.removeObstacle(row, col);
-        connectNodes(graph);
     }
+    connectNodes(graph);
 }
