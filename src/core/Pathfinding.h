@@ -15,6 +15,7 @@ class Pathfinding {
 public:
     static Path* dijkstra(Graph& graph, int startRow, int startCol, int endRow, int endCol);
     static Path* aStar(Graph& graph, int startRow, int startCol, int endRow, int endCol);
+    static Path* BFS(Graph& graph, int startRow, int startCol, int endRow, int endCol);
 
 private:
     static int heuristic(int row1, int col1, int row2, int col2);
