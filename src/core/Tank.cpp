@@ -37,6 +37,8 @@ void Tank::moveTo(int newRow, int newCol) {
 }
 
 float Tank::getDamage() {
+    if (color == BLUE || color == CYAN)
+        return 25.0f;
     return 50.0f;
 }
 
