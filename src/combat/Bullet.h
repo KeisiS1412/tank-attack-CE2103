@@ -1,8 +1,8 @@
 #ifndef P2_CE2103_TANKATTACK_BULLET_H
 #define P2_CE2103_TANKATTACK_BULLET_H
 
-#include "Graph.h"
-#include "Tank.h"
+#include "../core/Graph.h"
+#include "../core/Tank.h"
 
 class Bullet {
 private:
