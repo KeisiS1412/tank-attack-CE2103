@@ -1,5 +1,7 @@
 #include "Tank.h"
 
+#include "pathfinding/RandomMovement.h"
+
 Tank::Tank(int row, int col, TankColor color) {
     this->row = row;
     this->col = col;
@@ -22,17 +24,11 @@ Path* Tank::calculatePath(Graph& graph, int targetRow, int targetCol) {
         }
     }
 
-    Node neighbors[4];
-    int count = 0;
-    graph.getNeighbors(row, col, neighbors, count);
-
-    if (count == 0) return nullptr;
-
-    int randomIdx = rand() % count;
-    int randomRow = neighbors[randomIdx].row;
-    int randomCol = neighbors[randomIdx].col;
-
-    return Pathfinding::dijkstra(graph, row, col, randomRow, randomCol);
+    Node dest;
+    dest.row = targetRow;
+    dest.col = targetCol;
+    dest.obstacle = false;
+    return RandomMovement::getMovePath(graph, row, col, dest);
 }
 
 void Tank::moveTo(int newRow, int newCol) {
