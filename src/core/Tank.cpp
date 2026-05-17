@@ -1,15 +1,21 @@
 #include "Tank.h"
 
+Tank::Tank(int row, int col, TankColor color) {
+    this->row = row;
+    this->col = col;
+    this->color = color;
+    this->health = 100.0f;
+    this->alive = true;
+}
+
 Path* Tank::calculatePath(Graph& graph, int targetRow, int targetCol) {
     int chance = rand() % 100;
 
-    // tanques rojo/amarillo con Dijkstra con 80% de probabilidad
     if (color == RED || color == YELLOW) {
         if (chance < 80) {
             return Pathfinding::dijkstra(graph, row, col, targetRow, targetCol);
         }
     }
-    // tanques azul/cyan con BFS con 50% de probabilidad
     else if (color == BLUE || color == CYAN) {
         if (chance < 50) {
             return Pathfinding::BFS(graph, row, col, targetRow, targetCol);
