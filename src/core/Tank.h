@@ -5,7 +5,7 @@
 #include "Pathfinding.h"
 #include <cstdlib>
 
-enum TankColor { RED, YELLOW };
+enum TankColor { RED, YELLOW, BLUE, CYAN };
 
 class Tank {
 private:
