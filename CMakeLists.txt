@@ -32,7 +32,10 @@ add_executable(P2_CE2103_TankAttack
         src/pathfinding/RandomMovement.cpp
         src/pathfinding/RandomMovement.h
         src/combat/BulletManager.cpp
-        src/combat/BulletManager.h)
+        src/combat/BulletManager.h
+        src/powerups/PowerUp.h
+        src/powerups/PowerUpQueue.h
+        src/powerups/PowerUpQueue.cpp)
 
 target_include_directories(P2_CE2103_TankAttack PRIVATE src)
 link_directories("C:/SFML/SFML-3.1.0/lib") #cambiar dirección a carpeta propia
