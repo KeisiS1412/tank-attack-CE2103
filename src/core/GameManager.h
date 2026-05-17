@@ -7,8 +7,8 @@
 
 class GameManager {
 private:
-    Tank* player1Tanks[2];
-    Tank* player2Tanks[2];
+    Tank* player1Tanks[4]; // 2 rojos y 2 azules
+    Tank* player2Tanks[4]; // 2 amarillos y 2 cyan
     int currentPlayer;
     float timeLimit;
     float elapsedTime;

@@ -2,10 +2,17 @@
 #include <cstdlib>
 
 GameManager::GameManager(Graph& graph) {
+    // jugador 1: 2 rojos + 2 azules
     player1Tanks[0] = new Tank(0, 0, RED);
     player1Tanks[1] = new Tank(0, 1, RED);
+    player1Tanks[2] = new Tank(1, 0, BLUE);
+    player1Tanks[3] = new Tank(1, 1, BLUE);
+
+    // jugador 2: 2 amarillos + 2 cyan
     player2Tanks[0] = new Tank(14, 19, YELLOW);
     player2Tanks[1] = new Tank(14, 18, YELLOW);
+    player2Tanks[2] = new Tank(13, 19, CYAN);
+    player2Tanks[3] = new Tank(13, 18, CYAN);
 
     currentPlayer = 1;
     timeLimit = 300.0f;
@@ -17,7 +24,7 @@ GameManager::GameManager(Graph& graph) {
 }
 
 GameManager::~GameManager() {
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 4; i++) {
         delete player1Tanks[i];
         delete player2Tanks[i];
     }
@@ -35,8 +42,8 @@ void GameManager::update(float deltaTime) {
     }
 
     if (elapsedTime >= timeLimit) { gameOver = true; return; }
-    if (countAliveTanks(player1Tanks, 2) == 0) { gameOver = true; return; }
-    if (countAliveTanks(player2Tanks, 2) == 0) { gameOver = true; return; }
+    if (countAliveTanks(player1Tanks, 4) == 0) { gameOver = true; return; }
+    if (countAliveTanks(player2Tanks, 4) == 0) { gameOver = true; return; }
 }
 
 void GameManager::generateRandomPowerUp() {
@@ -72,8 +79,8 @@ int GameManager::countAliveTanks(Tank* tanks[], int count) {
 }
 
 int GameManager::determineWinner() {
-    int p1 = countAliveTanks(player1Tanks, 2);
-    int p2 = countAliveTanks(player2Tanks, 2);
+    int p1 = countAliveTanks(player1Tanks, 4);
+    int p2 = countAliveTanks(player2Tanks, 4);
     if (p1 > p2) return 1;
     if (p2 > p1) return 2;
     return 0;
