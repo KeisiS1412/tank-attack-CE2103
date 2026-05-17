@@ -27,13 +27,19 @@ void MapGenerator::connectNodes(Graph& graph)
 void MapGenerator::setObstacles(Graph& graph)
 {
     int total = graph.getRows() * graph.getCols();
+    int rows = graph.getRows();
+    int cols = graph.getCols();
     int numObstacles = obstacleRatio * total;
     for (int i = 0; i < numObstacles; i++)
     {
         int idx = rand() % total; // cantidad de índices de obstáculo
-        int row = idx / graph.getCols(); // la fila es el índice lineal entre el número de columnas
-        int col = idx % graph.getCols(); // la columna es el residuo del índice lineal entre el número de columnas
-        if (!graph.isObstacle(row, col))
+        int row = idx / cols; // la fila es el índice lineal entre el número de columnas
+        int col = idx % cols; // la columna es el residuo del índice lineal entre el número de columnas
+
+        bool isCorner = (row < 2 && col < 2) ||
+                        (row >= rows-2 && col >= cols-2);
+
+        if (!graph.isObstacle(row, col) && !isCorner)
         {
             graph.setObstacle(row, col);
             Node neighbors[4];
