@@ -2,7 +2,6 @@
 #define P2_CE2103_TANKATTACK_TANKRENDERER_H
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
-
 #include "core/Tank.h"
 
 

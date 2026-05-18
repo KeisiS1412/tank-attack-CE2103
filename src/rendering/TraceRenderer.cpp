@@ -1,5 +1,4 @@
 #include "TraceRenderer.h"
-
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 
