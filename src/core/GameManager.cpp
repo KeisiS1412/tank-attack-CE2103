@@ -98,6 +98,7 @@ int GameManager::determineWinner() {
 bool GameManager::isGameOver() { return gameOver; }
 int GameManager::getCurrentPlayer() { return currentPlayer; }
 void GameManager::nextTurn()
+
 {
     if (doubleTurnActive)
     {
@@ -109,3 +110,8 @@ void GameManager::nextTurn()
 float GameManager::getTimeRemaining() { return timeLimit - elapsedTime; }
 Tank* GameManager::getPlayer1Tank(int index) { return player1Tanks[index]; }
 Tank* GameManager::getPlayer2Tank(int index) { return player2Tanks[index]; }
+
+int GameManager::getPlayerPowerUpCount(int player, PowerUpType type) {
+    PowerUpQueue& queue = (player == 1) ? player1PowerUps : player2PowerUps;
+    return queue.countByType(type);
+}

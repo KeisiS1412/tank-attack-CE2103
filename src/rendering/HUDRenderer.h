@@ -9,6 +9,10 @@ private:
     sf::Font font;
     int windowW;
     int windowH;
+    sf::Texture texAttackPower;
+    sf::Texture texAttackPrecision;
+    sf::Texture texDoubleTurn;
+    sf::Texture texMovement;
 
 public:
     HUDRenderer(int windowW, int windowH);

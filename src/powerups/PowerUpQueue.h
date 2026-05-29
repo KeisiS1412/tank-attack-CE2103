@@ -20,6 +20,7 @@ public:
     PowerUp* dequeue();
     PowerUp* peek();
     bool isEmpty();
+    int countByType(PowerUpType type);
 };
 
 #endif

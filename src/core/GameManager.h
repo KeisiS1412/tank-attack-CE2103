@@ -38,6 +38,8 @@ public:
     float getTimeRemaining();
     Tank* getPlayer1Tank(int index);
     Tank* getPlayer2Tank(int index);
+    int getPlayer1PowerUpCount();
+    int getPlayerPowerUpCount(int player, PowerUpType type);
 
     void consumePowerUp();
     bool isAttackPrecisionActive();

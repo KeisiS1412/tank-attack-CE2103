@@ -3,7 +3,12 @@
 HUDRenderer::HUDRenderer(int windowW, int windowH) {
     this->windowW = windowW;
     this->windowH = windowH;
-    font.openFromFile("assets/fonts/poppins.light.ttf");
+    font.openFromFile("../assets/fonts/determination.ttf");
+
+    texAttackPower.loadFromFile("../assets/sprites/powerup-attack-power.png");
+    texAttackPrecision.loadFromFile("../assets/sprites/powerup-attack-precision.png");
+    texDoubleTurn.loadFromFile("../assets/sprites/powerup-double-turn.png");
+    texMovement.loadFromFile("../assets/sprites/powerup-movement.png");
 }
 
 void HUDRenderer::render(sf::RenderWindow& window, GameManager& gameManager) {
@@ -24,7 +29,6 @@ void HUDRenderer::render(sf::RenderWindow& window, GameManager& gameManager) {
     int seconds = totalSeconds % 60;
     std::string timeStr = "Tiempo: " + std::to_string(minutes) + ":" +
                           (seconds < 10 ? "0" : "") + std::to_string(seconds);
-
     sf::Text timeText(font, timeStr, 14);
     timeText.setFillColor(sf::Color::White);
     timeText.setPosition(sf::Vector2f(windowW / 2 - 40, windowH - 50));
@@ -57,6 +61,34 @@ void HUDRenderer::render(sf::RenderWindow& window, GameManager& gameManager) {
     p2Text.setFillColor(sf::Color::Yellow);
     p2Text.setPosition(sf::Vector2f(hudX + hudWidth - 180, windowH - 50));
     window.draw(p2Text);
+
+    auto drawPowerUps = [&](int player, float startX, float iconY, sf::Color textColor) {
+        sf::Texture* icons[4] = { &texDoubleTurn, &texMovement, &texAttackPrecision, &texAttackPower };
+        PowerUpType types[4] = { DOUBLE_TURN, MOVEMENT_PRECISION, ATTACK_PRECISION, ATTACK_POWER };
+        float iconSize = 18.0f;
+        float offsetX = 0;
+
+        for (int i = 0; i < 4; i++) {
+            int count = gameManager.getPlayerPowerUpCount(player, types[i]);
+            if (count == 0) continue;
+
+            sf::Sprite icon(*icons[i]);
+            icon.setScale(sf::Vector2f(iconSize / icon.getTexture().getSize().x,
+                                       iconSize / icon.getTexture().getSize().y));
+            icon.setPosition(sf::Vector2f(startX + offsetX, iconY));
+            window.draw(icon);
+
+            sf::Text countText(font, "x" + std::to_string(count), 12);
+            countText.setFillColor(textColor);
+            countText.setPosition(sf::Vector2f(startX + offsetX + iconSize + 2, iconY + 2));
+            window.draw(countText);
+
+            offsetX += iconSize + 22;
+        }
+    };
+
+    drawPowerUps(1, hudX + 10, windowH - 28, sf::Color::Red);
+    drawPowerUps(2, hudX + hudWidth - 180, windowH - 28, sf::Color::Yellow);
 
     if (gameManager.isGameOver()) {
         sf::RectangleShape overlay({(float)windowW, (float)windowH});

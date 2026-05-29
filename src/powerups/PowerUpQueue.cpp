@@ -46,3 +46,13 @@ PowerUp* PowerUpQueue::peek() {
 bool PowerUpQueue::isEmpty() {
     return front == nullptr;
 }
+
+int PowerUpQueue::countByType(PowerUpType type) {
+    int count = 0;
+    Node* curr = front;
+    while (curr != nullptr) {
+        if (curr->data->type == type) count++;
+        curr = curr->next;
+    }
+    return count;
+}
