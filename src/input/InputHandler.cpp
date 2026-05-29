@@ -76,7 +76,7 @@ void InputHandler::handleEvent(const sf::Event& event, GameManager& gameManager,
                     bulletTrace = Pathfinding::dijkstra(graph, selectedTank->getRow(), selectedTank->getCol(), clickRow, clickCol);
 
                 BulletManager::shoot(graph, *lastBullet, allTanks, 8);
-                gameManager.resetAttackPowerUps();
+                gameManager.resetPowerUps();
                 lastMovedTank = selectedTank;
                 selectedTank = nullptr;
                 gameManager.nextTurn();
