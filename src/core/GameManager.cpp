@@ -50,7 +50,7 @@ void GameManager::update(float deltaTime) {
 
 void GameManager::generateRandomPowerUp() {
     PowerUpType types[4] = { ATTACK_PRECISION, ATTACK_POWER, DOUBLE_TURN, MOVEMENT_PRECISION };
-    PowerUpType type = types[rand() % 2];
+    PowerUpType type = types[rand() % 4];
     player1PowerUps.enqueue(type);
     player2PowerUps.enqueue(type);
 }

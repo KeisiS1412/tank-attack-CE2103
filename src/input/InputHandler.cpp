@@ -26,7 +26,7 @@ void InputHandler::handleEvent(const sf::Event& event, GameManager& gameManager,
                 delete currentTrace;
                 currentTrace = nullptr;
 
-                Path* path = selectedTank->calculatePath(graph, clickRow, clickCol);
+                Path* path = selectedTank->calculatePath(graph, clickRow, clickCol, gameManager.isMovementPrecisionActive());
                 if (path != nullptr) {
                     int lastNode = path->nodes[path->length - 1];
                     int destRow = lastNode / graph.getCols();
