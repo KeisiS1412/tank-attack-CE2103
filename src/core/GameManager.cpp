@@ -21,6 +21,8 @@ GameManager::GameManager(Graph& graph) {
     powerUpTimer = 0.0f;
     attackPrecisionActive = false;
     attackPowerActive = false;
+    doubleTurnActive = false;
+    movementPrecisionActive = false;
 }
 
 GameManager::~GameManager() {
@@ -47,7 +49,7 @@ void GameManager::update(float deltaTime) {
 }
 
 void GameManager::generateRandomPowerUp() {
-    PowerUpType types[2] = { ATTACK_PRECISION, ATTACK_POWER };
+    PowerUpType types[4] = { ATTACK_PRECISION, ATTACK_POWER, DOUBLE_TURN, MOVEMENT_PRECISION };
     PowerUpType type = types[rand() % 2];
     player1PowerUps.enqueue(type);
     player2PowerUps.enqueue(type);
@@ -60,17 +62,23 @@ void GameManager::consumePowerUp() {
     PowerUp* p = queue.dequeue();
     if (p->type == ATTACK_PRECISION) attackPrecisionActive = true;
     if (p->type == ATTACK_POWER) attackPowerActive = true;
+    if (p->type == DOUBLE_TURN) doubleTurnActive = true;
+    if (p->type == MOVEMENT_PRECISION) movementPrecisionActive = true;
     delete p;
     nextTurn();
 }
 
-void GameManager::resetAttackPowerUps() {
+void GameManager::resetPowerUps() {
     attackPrecisionActive = false;
     attackPowerActive = false;
+    doubleTurnActive = false;
+    movementPrecisionActive = false;
 }
 
 bool GameManager::isAttackPrecisionActive() { return attackPrecisionActive; }
 bool GameManager::isAttackPowerActive() { return attackPowerActive; }
+bool GameManager::isDoubleTurnActive() { return doubleTurnActive; }
+bool GameManager::isMovementPrecisionActive() { return movementPrecisionActive; }
 
 int GameManager::countAliveTanks(Tank* tanks[], int count) {
     int alive = 0;
@@ -89,7 +97,15 @@ int GameManager::determineWinner() {
 
 bool GameManager::isGameOver() { return gameOver; }
 int GameManager::getCurrentPlayer() { return currentPlayer; }
-void GameManager::nextTurn() { currentPlayer = (currentPlayer == 1) ? 2 : 1; }
+void GameManager::nextTurn()
+{
+    if (doubleTurnActive)
+    {
+        doubleTurnActive = false;
+        return;
+    }
+    currentPlayer = (currentPlayer == 1) ? 2 : 1;
+}
 float GameManager::getTimeRemaining() { return timeLimit - elapsedTime; }
 Tank* GameManager::getPlayer1Tank(int index) { return player1Tanks[index]; }
 Tank* GameManager::getPlayer2Tank(int index) { return player2Tanks[index]; }
