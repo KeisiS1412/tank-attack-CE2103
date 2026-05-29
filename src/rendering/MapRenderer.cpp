@@ -5,6 +5,8 @@ MapRenderer::MapRenderer(int windowH, int windowW, Graph& graph) : graph(graph)
 {
     this-> windowH = windowH;
     this-> windowW = windowW;
+    texObstacle.loadFromFile("assets/sprites/obstacle.png");
+    texGrass.loadFromFile("assets/sprites/grass.png");
 }
 
 void MapRenderer::renderMap(sf::RenderWindow& window)
@@ -26,12 +28,19 @@ void MapRenderer::renderMap(sf::RenderWindow& window)
             sf::RectangleShape cell({cellW, cellH});
             cell.setPosition(sf::Vector2f(j * cellW, i * cellH));
 
-            if (graph.isObstacle(i, j))
-                cell.setFillColor(sf::Color::Black);
-            else
-                cell.setFillColor(sf::Color::Green);
+            sf::Texture* tex = nullptr;
+            if (graph.isObstacle(i, j)) tex = &texObstacle;
+            else tex = &texGrass;
 
-            window.draw(cell);
+            sf::Sprite sprite(*tex);
+
+            float scaleX = cellW / sprite.getLocalBounds().size.x;
+            float scaleY = cellH / sprite.getLocalBounds().size.y;
+            sprite.setScale(sf::Vector2f(scaleX, scaleY));
+
+            sprite.setPosition(sf::Vector2f(j * cellW, i * cellH));
+
+            window.draw(sprite);
         }
     }
 }

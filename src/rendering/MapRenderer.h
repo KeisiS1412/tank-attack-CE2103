@@ -2,6 +2,7 @@
 #define P2_CE2103_TANKATTACK_MAPRENDERER_H
 #include "core/graph.h"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 class MapRenderer
 {
@@ -9,6 +10,8 @@ private:
     int windowH;
     int windowW;
     Graph& graph;
+    sf::Texture texObstacle;
+    sf::Texture texGrass;
 public:
     MapRenderer(int windowH, int windowW, Graph& graph);
     void renderMap(sf::RenderWindow& window);
