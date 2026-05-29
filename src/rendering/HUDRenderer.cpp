@@ -48,7 +48,7 @@ void HUDRenderer::render(sf::RenderWindow& window, GameManager& gameManager) {
     }
     sf::Text p1Text(font, p1Str, 14);
     p1Text.setFillColor(sf::Color::Red);
-    p1Text.setPosition(sf::Vector2f(hudX + 10, windowH - 50));
+    p1Text.setPosition(sf::Vector2f(hudX - 75, windowH - 50));
     window.draw(p1Text);
 
     std::string p2Str = "J2: ";
@@ -59,13 +59,13 @@ void HUDRenderer::render(sf::RenderWindow& window, GameManager& gameManager) {
     }
     sf::Text p2Text(font, p2Str, 14);
     p2Text.setFillColor(sf::Color::Yellow);
-    p2Text.setPosition(sf::Vector2f(hudX + hudWidth - 180, windowH - 50));
+    p2Text.setPosition(sf::Vector2f(hudX + hudWidth - 85, windowH - 50));
     window.draw(p2Text);
 
     auto drawPowerUps = [&](int player, float startX, float iconY, sf::Color textColor) {
         sf::Texture* icons[4] = { &texDoubleTurn, &texMovement, &texAttackPrecision, &texAttackPower };
         PowerUpType types[4] = { DOUBLE_TURN, MOVEMENT_PRECISION, ATTACK_PRECISION, ATTACK_POWER };
-        float iconSize = 18.0f;
+        float iconSize = 30.0f;
         float offsetX = 0;
 
         for (int i = 0; i < 4; i++) {
@@ -80,15 +80,15 @@ void HUDRenderer::render(sf::RenderWindow& window, GameManager& gameManager) {
 
             sf::Text countText(font, "x" + std::to_string(count), 12);
             countText.setFillColor(textColor);
-            countText.setPosition(sf::Vector2f(startX + offsetX + iconSize + 2, iconY + 2));
+            countText.setPosition(sf::Vector2f(startX + offsetX + iconSize + 0, iconY + 8));
             window.draw(countText);
 
             offsetX += iconSize + 22;
         }
     };
 
-    drawPowerUps(1, hudX + 10, windowH - 28, sf::Color::Red);
-    drawPowerUps(2, hudX + hudWidth - 180, windowH - 28, sf::Color::Yellow);
+    drawPowerUps(1, hudX - 82, windowH - 35, sf::Color::Red);
+    drawPowerUps(2, hudX + hudWidth - 119, windowH - 35, sf::Color::Yellow);
 
     if (gameManager.isGameOver()) {
         sf::RectangleShape overlay({(float)windowW, (float)windowH});
