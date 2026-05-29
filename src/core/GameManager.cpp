@@ -61,6 +61,7 @@ void GameManager::consumePowerUp() {
     if (p->type == ATTACK_PRECISION) attackPrecisionActive = true;
     if (p->type == ATTACK_POWER) attackPowerActive = true;
     delete p;
+    nextTurn();
 }
 
 void GameManager::resetAttackPowerUps() {

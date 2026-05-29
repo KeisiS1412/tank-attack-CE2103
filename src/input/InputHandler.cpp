@@ -87,7 +87,6 @@ void InputHandler::handleEvent(const sf::Event& event, GameManager& gameManager,
     if (auto* keyPress = event.getIf<sf::Event::KeyPressed>()) {
         if (keyPress->code == sf::Keyboard::Key::LShift) {
             gameManager.consumePowerUp();
-            gameManager.nextTurn();
         }
     }
 }
