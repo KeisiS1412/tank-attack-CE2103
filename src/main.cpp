@@ -8,6 +8,7 @@
 #include "rendering/TankRenderer.h"
 #include "rendering/TraceRenderer.h"
 #include "rendering/BulletRenderer.h"
+#include "rendering/HUDRenderer.h"
 #include "input/InputHandler.h"
 
 int main() {
@@ -19,11 +20,12 @@ int main() {
 
     GameManager gameManager(graph);
 
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "Tank Attack!");
-    MapRenderer mapRenderer(600, 800, graph);
-    TankRenderer tankRenderer(600, 800, graph);
-    TraceRenderer traceRenderer(600, 800, graph);
-    BulletRenderer bulletRenderer(600, 800, graph);
+    sf::RenderWindow window(sf::VideoMode({800, 650}), "Tank Attack!");
+    MapRenderer mapRenderer(590, 800, graph);
+    TankRenderer tankRenderer(590, 800, graph);
+    TraceRenderer traceRenderer(590, 800, graph);
+    BulletRenderer bulletRenderer(590, 800, graph);
+    HUDRenderer hudRenderer(800, 650);
     InputHandler inputHandler(graph);
 
     sf::Clock clock;
@@ -60,6 +62,8 @@ int main() {
             Tank* t = gameManager.getPlayer2Tank(i);
             if (t->isAlive()) tankRenderer.renderTank(window, *t);
         }
+
+        hudRenderer.render(window, gameManager);
 
         window.display();
     }
