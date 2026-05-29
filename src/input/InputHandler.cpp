@@ -1,6 +1,6 @@
 #include "InputHandler.h"
 
-InputHandler::InputHandler(Graph& graph) : graph(graph) {
+InputHandler::InputHandler(Graph& graph, ViewConfig& config) : graph(graph), config(config) {
     selectedTank = nullptr;
     currentTrace = nullptr;
     bulletTrace = nullptr;
@@ -16,11 +16,10 @@ InputHandler::~InputHandler() {
 
 void InputHandler::handleEvent(const sf::Event& event, GameManager& gameManager, sf::RenderWindow& window) {
     if (auto* mouseClick = event.getIf<sf::Event::MouseButtonPressed>()) {
-        auto winSize = window.getSize();
-        float cellW = (float)winSize.x / graph.getCols();
-        float cellH = (float)winSize.y / graph.getRows();
-        int clickCol = mouseClick->position.x / cellW;
-        int clickRow = mouseClick->position.y / cellH;
+        float cellW = (float)config.mapWidth / graph.getCols();
+        float cellH = (float)config.mapHeight / graph.getRows();
+        int clickCol = (mouseClick->position.x - config.mapX) / cellW;
+        int clickRow = (mouseClick->position.y - config.mapY) / cellH;
 
         if (mouseClick->button == sf::Mouse::Button::Left) {
             if (selectedTank != nullptr) {

@@ -21,12 +21,19 @@ int main() {
     GameManager gameManager(graph);
 
     sf::RenderWindow window(sf::VideoMode({800, 650}), "Tank Attack!");
-    MapRenderer mapRenderer(590, 800, graph);
-    TankRenderer tankRenderer(590, 800, graph);
-    TraceRenderer traceRenderer(590, 800, graph);
-    BulletRenderer bulletRenderer(590, 800, graph);
+
+    ViewConfig config;
+    config.mapX = 0;
+    config.mapY = 0;
+    config.mapWidth = 800;
+    config.mapHeight = 590;
+
+    MapRenderer mapRenderer(config, graph);
+    TankRenderer tankRenderer(config, graph);
+    TraceRenderer traceRenderer(config, graph);
+    BulletRenderer bulletRenderer(config, graph);
     HUDRenderer hudRenderer(800, 650);
-    InputHandler inputHandler(graph);
+    InputHandler inputHandler(graph, config);
 
     sf::Clock clock;
 

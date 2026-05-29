@@ -46,6 +46,7 @@ add_executable(P2_CE2103_TankAttack
         src/input/InputHandler.h
         src/rendering/HUDRenderer.cpp
         src/rendering/HUDRenderer.h
+        src/rendering/ViewConfig.h
 )
 
 target_include_directories(P2_CE2103_TankAttack PRIVATE src)

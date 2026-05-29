@@ -3,25 +3,18 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 
-TraceRenderer::TraceRenderer(int windowH, int windowW, Graph& graph) : graph(graph)
-{
-    this-> windowH = windowH;
-    this-> windowW = windowW;
-}
+#include "ViewConfig.h"
 
+TraceRenderer::TraceRenderer(ViewConfig& config, Graph& graph) : graph(graph), config(config) {}
 void TraceRenderer::renderTrace(sf::RenderWindow& window, Path* path, Tank& tank)
 {
     if (path == nullptr || path->length < 2) return;
-    
-    auto size = window.getSize();
-    windowW = size.x;
-    windowH = size.y;
 
     int rows = graph.getRows();
     int cols = graph.getCols();
 
-    float cellH = windowH / rows;
-    float cellW = windowW / cols;
+    float cellH = (float)config.mapHeight / rows;
+    float cellW = (float)config.mapWidth / cols;
 
     int opacity = 150;
 
@@ -36,7 +29,7 @@ void TraceRenderer::renderTrace(sf::RenderWindow& window, Path* path, Tank& tank
         int col = path->nodes[i] % cols;
 
         sf::RectangleShape cell({cellW, cellH});
-        cell.setPosition(sf::Vector2f(col * cellW, row * cellH));
+        cell.setPosition(sf::Vector2f(config.mapX + col * cellW, config.mapY + row * cellH));
         cell.setFillColor(sf::Color(color)); // semitransparente
         window.draw(cell);
     }

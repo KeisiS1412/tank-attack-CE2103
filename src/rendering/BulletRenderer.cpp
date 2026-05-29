@@ -2,28 +2,22 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
+
+#include "ViewConfig.h"
 #include "combat/Bullet.h"
 #include "core/Pathfinding.h"
 
-BulletRenderer::BulletRenderer(int windowH, int windowW, Graph& graph) : graph(graph)
-{
-    this-> windowH = windowH;
-    this-> windowW = windowW;
-}
+BulletRenderer::BulletRenderer(ViewConfig& config, Graph& graph) : graph(graph), config(config) {}
 
 void BulletRenderer::renderBullet(sf::RenderWindow& window, Bullet& bullet, Path* path)
 {
     if (path == nullptr || path->length < 2) return;
 
-    auto size = window.getSize();
-    windowW = size.x;
-    windowH = size.y;
-
     int rows = graph.getRows();
     int cols = graph.getCols();
 
-    float cellH = windowH / rows;
-    float cellW = windowW / cols;
+    float cellH = (float)config.mapHeight / rows;
+    float cellW = (float)config.mapWidth / cols;
 
     sf::VertexArray lines(sf::PrimitiveType::Lines, (path->length - 1) * 2);
 
@@ -52,7 +46,7 @@ void BulletRenderer::renderBullet(sf::RenderWindow& window, Bullet& bullet, Path
     int lastNode = path->nodes[path->length - 1];
     int destRow = lastNode / cols;
     int destCol = lastNode % cols;
-    dot.setPosition(sf::Vector2f(destCol * cellW + cellW / 2 - radius, destRow * cellH + cellH / 2 - radius));
+    dot.setPosition(sf::Vector2f((config.mapX + destCol) * cellW + cellW / 2 - radius, (config.mapY + destRow) * cellH + cellH / 2 - radius));
     dot.setFillColor(sf::Color::White);
     window.draw(lines);
     window.draw(dot);

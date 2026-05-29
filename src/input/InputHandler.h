@@ -8,11 +8,13 @@
 #include "core/Pathfinding.h"
 #include "combat/Bullet.h"
 #include "combat/BulletManager.h"
+#include "rendering/ViewConfig.h"
 
 class InputHandler {
 private:
     Tank* selectedTank;
     Graph& graph;
+    ViewConfig& config;
 
 public:
     Path* currentTrace;
@@ -20,7 +22,7 @@ public:
     Bullet* lastBullet;
     Tank* lastMovedTank;
 
-    InputHandler(Graph& graph);
+    InputHandler(Graph& graph, ViewConfig& config);
     ~InputHandler();
 
     void handleEvent(const sf::Event& event, GameManager& gameManager, sf::RenderWindow& window);

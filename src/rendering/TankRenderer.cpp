@@ -3,10 +3,10 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-TankRenderer::TankRenderer(int windowH, int windowW, Graph& graph) : graph(graph)
+#include "ViewConfig.h"
+
+TankRenderer::TankRenderer(ViewConfig& config, Graph& graph) : graph(graph), config(config)
 {
-    this-> windowH = windowH;
-    this-> windowW = windowW;
     texRed.loadFromFile("assets/sprites/tank-red.png");
     texBlue.loadFromFile("assets/sprites/tank-blue.png");
     texYellow.loadFromFile("assets/sprites/tank-yellow.png");
@@ -15,15 +15,11 @@ TankRenderer::TankRenderer(int windowH, int windowW, Graph& graph) : graph(graph
 
 void TankRenderer::renderTank(sf::RenderWindow& window, Tank& tank)
 {
-    auto size = window.getSize();
-    windowW = size.x;
-    windowH = size.y;
-
     int rows = graph.getRows();
     int cols = graph.getCols();
 
-    float cellH = windowH / rows;
-    float cellW = windowW / cols;
+    float cellH = (float)config.mapHeight / rows;
+    float cellW = (float)config.mapWidth / cols;
 
     int row = tank.getRow();
     int col = tank.getCol();
@@ -40,7 +36,7 @@ void TankRenderer::renderTank(sf::RenderWindow& window, Tank& tank)
     float scaleY = cellH / sprite.getLocalBounds().size.y;
     sprite.setScale(sf::Vector2f(scaleX, scaleY));
 
-    sprite.setPosition(sf::Vector2f(col * cellW, row * cellH));
+    sprite.setPosition(sf::Vector2f(config.mapX + col * cellW, config.mapY + row * cellH));
 
     window.draw(sprite);
 }

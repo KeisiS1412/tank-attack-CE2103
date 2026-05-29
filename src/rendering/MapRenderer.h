@@ -4,16 +4,17 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
+#include "ViewConfig.h"
+
 class MapRenderer
 {
 private:
-    int windowH;
-    int windowW;
+    ViewConfig& config;
     Graph& graph;
     sf::Texture texObstacle;
     sf::Texture texGrass;
 public:
-    MapRenderer(int windowH, int windowW, Graph& graph);
+    MapRenderer(ViewConfig& config, Graph& graph);
     void renderMap(sf::RenderWindow& window);
 };
 
