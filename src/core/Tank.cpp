@@ -10,19 +10,25 @@ Tank::Tank(int row, int col, TankColor color) {
     this->alive = true;
 }
 
-Path* Tank::calculatePath(Graph& graph, int targetRow, int targetCol) {
+Path* Tank::calculatePath(Graph& graph, int targetRow, int targetCol, bool precisionActive) {
     int chance = rand() % 100;
 
+    int threshold;
+    if (precisionActive) threshold = 90;
+    else if (color == RED || color == YELLOW) threshold = 80;
+    else if (color == BLUE || color == CYAN) threshold = 50;
+
     if (color == RED || color == YELLOW) {
-        if (chance < 80) {
+        if (chance < threshold) {
             return Pathfinding::dijkstra(graph, row, col, targetRow, targetCol);
         }
     }
     else if (color == BLUE || color == CYAN) {
-        if (chance < 50) {
+        if (chance < threshold) {
             return Pathfinding::BFS(graph, row, col, targetRow, targetCol);
         }
     }
+
 
     Node dest;
     dest.row = targetRow;

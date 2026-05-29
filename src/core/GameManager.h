@@ -20,6 +20,8 @@ private:
 
     bool attackPrecisionActive;
     bool attackPowerActive;
+    bool doubleTurnActive;
+    bool movementPrecisionActive;
 
     int countAliveTanks(Tank* tanks[], int count);
     int determineWinner();
@@ -40,7 +42,9 @@ public:
     void consumePowerUp();
     bool isAttackPrecisionActive();
     bool isAttackPowerActive();
-    void resetAttackPowerUps();
+    bool isDoubleTurnActive();
+    bool isMovementPrecisionActive();
+    void resetPowerUps();
 };
 
 #endif

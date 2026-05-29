@@ -18,7 +18,7 @@ private:
 public:
     Tank(int row, int col, TankColor color);
 
-    Path* calculatePath(Graph& graph, int targetRow, int targetCol);
+    Path* calculatePath(Graph& graph, int targetRow, int targetCol, bool precisionActive = false);
     void moveTo(int newRow, int newCol);
     float getDamage();
     void receiveDamage(float amount);
