@@ -29,13 +29,40 @@ void InputHandler::handleEvent(const sf::Event& event, GameManager& gameManager,
 
                 Path* path = selectedTank->calculatePath(graph, clickRow, clickCol);
                 if (path != nullptr) {
-                    currentTrace = path;
                     int lastNode = path->nodes[path->length - 1];
-                    selectedTank->moveTo(lastNode / graph.getCols(), lastNode % graph.getCols());
+                    int destRow = lastNode / graph.getCols();
+                    int destCol = lastNode % graph.getCols();
+
+                    Tank* allTanks[8] = {
+                        gameManager.getPlayer1Tank(0), gameManager.getPlayer1Tank(1),
+                        gameManager.getPlayer1Tank(2), gameManager.getPlayer1Tank(3),
+                        gameManager.getPlayer2Tank(0), gameManager.getPlayer2Tank(1),
+                        gameManager.getPlayer2Tank(2), gameManager.getPlayer2Tank(3)
+                    };
+
+                    bool occupied = false;
+                    for (int j = 0; j < 8; j++) {
+                        if (allTanks[j] != selectedTank && allTanks[j]->isAlive() &&
+                            allTanks[j]->getRow() == destRow && allTanks[j]->getCol() == destCol) {
+                            occupied = true;
+                            break;
+                        }
+                    }
+
+                    if (!occupied) {
+                        currentTrace = path;
+                        selectedTank->moveTo(destRow, destCol);
+                        lastMovedTank = selectedTank;
+                        selectedTank = nullptr;
+                        gameManager.nextTurn();
+                    } else {
+                        delete path;
+                    }
+                } else {
+                    lastMovedTank = selectedTank;
+                    selectedTank = nullptr;
+                    gameManager.nextTurn();
                 }
-                lastMovedTank = selectedTank;
-                selectedTank = nullptr;
-                gameManager.nextTurn();
             } else {
                 for (int i = 0; i < 4; i++) {
                     Tank* t = (gameManager.getCurrentPlayer() == 1)
