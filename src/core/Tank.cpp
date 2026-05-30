@@ -1,5 +1,4 @@
 #include "Tank.h"
-
 #include "pathfinding/RandomMovement.h"
 
 Tank::Tank(int row, int col, TankColor color) {
@@ -10,31 +9,39 @@ Tank::Tank(int row, int col, TankColor color) {
     this->alive = true;
 }
 
-Path* Tank::calculatePath(Graph& graph, int targetRow, int targetCol, bool precisionActive) {
-    int chance = rand() % 100;
+Path* Tank::calculatePath(Graph& graph, int targetRow, int targetCol, Tank* allTanks[], int tankCount) {
+    for (int i = 0; i < tankCount; i++) {
+        if (allTanks[i] != this && allTanks[i]->isAlive()) {
+            graph.setObstacle(allTanks[i]->getRow(), allTanks[i]->getCol());
+        }
+    }
 
-    int threshold;
-    if (precisionActive) threshold = 90;
-    else if (color == RED || color == YELLOW) threshold = 80;
-    else if (color == BLUE || color == CYAN) threshold = 50;
+    int chance = rand() % 100;
+    Path* path = nullptr;
 
     if (color == RED || color == YELLOW) {
-        if (chance < threshold) {
-            return Pathfinding::dijkstra(graph, row, col, targetRow, targetCol);
-        }
+        if (chance < 80)
+            path = Pathfinding::dijkstra(graph, row, col, targetRow, targetCol);
+    } else if (color == BLUE || color == CYAN) {
+        if (chance < 50)
+            path = Pathfinding::BFS(graph, row, col, targetRow, targetCol);
     }
-    else if (color == BLUE || color == CYAN) {
-        if (chance < threshold) {
-            return Pathfinding::BFS(graph, row, col, targetRow, targetCol);
+
+    if (path == nullptr) {
+        Node dest;
+        dest.row = targetRow;
+        dest.col = targetCol;
+        dest.obstacle = false;
+        path = RandomMovement::getMovePath(graph, row, col, dest);
+    }
+
+    for (int i = 0; i < tankCount; i++) {
+        if (allTanks[i] != this && allTanks[i]->isAlive()) {
+            graph.removeObstacle(allTanks[i]->getRow(), allTanks[i]->getCol());
         }
     }
 
-
-    Node dest;
-    dest.row = targetRow;
-    dest.col = targetCol;
-    dest.obstacle = false;
-    return RandomMovement::getMovePath(graph, row, col, dest);
+    return path;
 }
 
 void Tank::moveTo(int newRow, int newCol) {

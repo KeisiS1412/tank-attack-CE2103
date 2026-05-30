@@ -26,18 +26,18 @@ void InputHandler::handleEvent(const sf::Event& event, GameManager& gameManager,
                 delete currentTrace;
                 currentTrace = nullptr;
 
-                Path* path = selectedTank->calculatePath(graph, clickRow, clickCol, gameManager.isMovementPrecisionActive());
+                Tank* allTanks[8] = {
+                    gameManager.getPlayer1Tank(0), gameManager.getPlayer1Tank(1),
+                    gameManager.getPlayer1Tank(2), gameManager.getPlayer1Tank(3),
+                    gameManager.getPlayer2Tank(0), gameManager.getPlayer2Tank(1),
+                    gameManager.getPlayer2Tank(2), gameManager.getPlayer2Tank(3)
+                };
+
+                Path* path = selectedTank->calculatePath(graph, clickRow, clickCol, allTanks, 8);
                 if (path != nullptr) {
                     int lastNode = path->nodes[path->length - 1];
                     int destRow = lastNode / graph.getCols();
                     int destCol = lastNode % graph.getCols();
-
-                    Tank* allTanks[8] = {
-                        gameManager.getPlayer1Tank(0), gameManager.getPlayer1Tank(1),
-                        gameManager.getPlayer1Tank(2), gameManager.getPlayer1Tank(3),
-                        gameManager.getPlayer2Tank(0), gameManager.getPlayer2Tank(1),
-                        gameManager.getPlayer2Tank(2), gameManager.getPlayer2Tank(3)
-                    };
 
                     bool occupied = false;
                     for (int j = 0; j < 8; j++) {
