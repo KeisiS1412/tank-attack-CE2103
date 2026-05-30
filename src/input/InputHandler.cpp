@@ -1,5 +1,7 @@
 #include "InputHandler.h"
 
+#include "combat/BulletTracer.h"
+
 InputHandler::InputHandler(Graph& graph, ViewConfig& config) : graph(graph), config(config) {
     selectedTank = nullptr;
     currentTrace = nullptr;
@@ -25,6 +27,8 @@ void InputHandler::handleEvent(const sf::Event& event, GameManager& gameManager,
             if (selectedTank != nullptr) {
                 delete currentTrace;
                 currentTrace = nullptr;
+                delete bulletTrace;
+                bulletTrace = nullptr;
 
                 Tank* allTanks[8] = {
                     gameManager.getPlayer1Tank(0), gameManager.getPlayer1Tank(1),
@@ -86,7 +90,8 @@ void InputHandler::handleEvent(const sf::Event& event, GameManager& gameManager,
 
                 float damage = gameManager.isAttackPowerActive() ? 100.0f : selectedTank->getDamage();
                 bool useAStar = gameManager.isAttackPrecisionActive();
-
+                delete currentTrace;
+                currentTrace = nullptr;
                 delete lastBullet;
                 delete bulletTrace;
 
@@ -99,7 +104,7 @@ void InputHandler::handleEvent(const sf::Event& event, GameManager& gameManager,
                 if (useAStar)
                     bulletTrace = Pathfinding::aStar(graph, selectedTank->getRow(), selectedTank->getCol(), clickRow, clickCol);
                 else
-                    bulletTrace = Pathfinding::dijkstra(graph, selectedTank->getRow(), selectedTank->getCol(), clickRow, clickCol);
+                    bulletTrace = BulletTracer::calculateTrajectory(graph, *lastBullet);
 
                 BulletManager::shoot(graph, *lastBullet, allTanks, 8);
                 gameManager.resetPowerUps();

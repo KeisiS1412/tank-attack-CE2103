@@ -40,8 +40,6 @@ Path* RandomMovement::getMovePath(Graph& graph, int row, int col, Node dest)
     else
     {
         Node newStart = choosePosition(graph, row, col);
-        int startRow = newStart.row;
-        int startCol = newStart.col;
-        return Pathfinding::BFS(graph, startRow, startCol, dest.row, dest.col);
+        return Pathfinding::BFS(graph, row, col, newStart.row, newStart.col);
     }
 }
