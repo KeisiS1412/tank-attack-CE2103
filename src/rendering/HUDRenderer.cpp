@@ -95,9 +95,19 @@ void HUDRenderer::render(sf::RenderWindow& window, GameManager& gameManager) {
         overlay.setFillColor(sf::Color(0, 0, 0, 150));
         window.draw(overlay);
 
-        sf::Text gameOverText(font, "GAME OVER", 50);
-        gameOverText.setFillColor(sf::Color::White);
-        gameOverText.setPosition(sf::Vector2f(windowW / 2 - 120, windowH / 2 - 30));
+        int winner = gameManager.determineWinner();
+        std::string message;
+        if (winner == 1)      message = "GANA JUGADOR 1";
+        else if (winner == 2) message = "GANA JUGADOR 2";
+        else                  message = "EMPATE";
+
+        sf::Text gameOverText(font, message, 50);
+        gameOverText.setFillColor(winner == 1 ? sf::Color::Red :
+                                winner == 2 ? sf::Color::Yellow :
+                                sf::Color::White);
+        gameOverText.setPosition(sf::Vector2f(
+            windowW / 2 - gameOverText.getLocalBounds().size.x / 2,
+            windowH / 2 - 30));
         window.draw(gameOverText);
     }
 }
